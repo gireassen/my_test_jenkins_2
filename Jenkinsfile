@@ -8,6 +8,7 @@ pipeline {
                 // empty commit
                 // empty commit #2
                 // empty commit #3
+                // empty commit #4
                 sh 'echo "Running tests..."'
             }
         }
