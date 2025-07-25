@@ -1,15 +1,17 @@
 pipeline {
     agent any
+    triggers {
+        githubPush()
+    }
     stages {
-        stage('Deploy production only if tagged') {
-            when {
-                expression {
-                    def tag = sh(script: 'git tag --points-at HEAD', returnStdout: true).trim()
-                    return tag != ''
-                }
-            }
+        stage('Dev: Build') {
             steps {
-                echo "Production tag detected. Deploying release!"
+                echo "Building development branch: ${env.GIT_BRANCH}"
+            }
+        }
+        stage('Dev: Test') {
+            steps {
+                echo "Running tests for development branch"
             }
         }
     }
