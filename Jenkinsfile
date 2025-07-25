@@ -1,15 +1,15 @@
 pipeline {
     agent any
-
     stages {
-        stage('Tag Detected') {
+        stage('Build if Tag Exists') {
             when {
-                expression { return env.ref_type == 'tag' }
+                expression {
+                    def tag = sh(script: 'git tag --points-at HEAD', returnStdout: true).trim()
+                    return tag != ''
+                }
             }
             steps {
-                script {
-                    echo "Triggered by tag: ${env.ref}"
-                }
+                echo "Release tag found. Deploying: ${tag}"
             }
         }
     }
