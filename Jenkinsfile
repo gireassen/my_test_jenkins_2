@@ -1,29 +1,29 @@
 pipeline {
     agent any
-
     stages {
-        stage('Check tag') {
+        stage('Deploy by tag') {
             when {
                 expression {
-                    def tag = sh(script: 'git tag --points-at HEAD', returnStdout: true).trim()
-                    return tag != ''
+                    def tag = sh(script: "git tag --points-at HEAD", returnStdout: true).trim()
+                    return tag != ""
                 }
             }
             steps {
-                echo "Tag found. Proceeding with release pipeline."
+                script {
+                    def tag = sh(script: "git tag --points-at HEAD", returnStdout: true).trim()
+                    echo "🚀 Deploying from tag: ${tag}"
+                }
             }
         }
-
-        stage('Deploy to Production') {
+        stage('Skip if not a tag') {
             when {
                 expression {
-                    def tag = sh(script: 'git tag --points-at HEAD', returnStdout: true).trim()
-                    return tag != ''
+                    def tag = sh(script: "git tag --points-at HEAD", returnStdout: true).trim()
+                    return tag == ""
                 }
             }
             steps {
-                echo "Deploying production version from tag"
-                // сюда деплой
+                echo "⏩ No tag found, skipping deployment"
             }
         }
     }
