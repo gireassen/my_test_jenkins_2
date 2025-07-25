@@ -8,6 +8,7 @@ pipeline {
                 // добавьте сюда сборку, тестирование, линтинг и т.д.
 		// empty commit
 		// empty commit #2
+		// empty commit #3
             }
         }
 
