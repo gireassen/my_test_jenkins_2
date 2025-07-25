@@ -1,17 +1,9 @@
 pipeline {
     agent any
-    triggers {
-        githubPush()
-    }
     stages {
-        stage('Dev: Build') {
+        stage('Build Dev Branch') {
             steps {
-                echo "Building development branch: ${env.GIT_BRANCH}"
-            }
-        }
-        stage('Dev: Test') {
-            steps {
-                echo "Running tests for development branch"
+                echo "Building DEV branch: ${env.GIT_BRANCH}"
             }
         }
     }
