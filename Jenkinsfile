@@ -1,17 +1,17 @@
 pipeline {
     agent any
     stages {
-        stage('Build') {
+        stage('Deploy production only if tagged') {
+            when {
+                expression {
+                    def tag = sh(script: 'git tag --points-at HEAD', returnStdout: true).trim()
+                    return tag != ''
+                }
+            }
             steps {
-                echo "Building development branch: ${env.GIT_BRANCH}"
-                // сборка, линт, тесты
-                // empty commit
-                // empty commit #2
-                // empty commit #3
-                // empty commit #4
-                // empty commit #5
-                sh 'echo "Running tests..."'
+                echo "Production tag detected. Deploying release!"
             }
         }
     }
 }
+
