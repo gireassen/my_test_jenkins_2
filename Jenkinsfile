@@ -1,7 +1,7 @@
 pipeline {
     agent any
     triggers {
-        githubPush()
+        // 1111
     }
     stages {
         stage('Check if tag') {
