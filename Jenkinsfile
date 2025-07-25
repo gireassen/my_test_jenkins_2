@@ -1,29 +1,15 @@
 pipeline {
     agent any
-    triggers {
-        // 1111
-    }
+
     stages {
-        stage('Check if tag') {
+        stage('Tag Detected') {
             when {
-                expression {
-                    def tag = sh(script: 'git tag --points-at HEAD', returnStdout: true).trim()
-                    return tag != ''
-                }
+                expression { return env.ref_type == 'tag' }
             }
             steps {
-                echo "Tag detected, starting production deploy."
-            }
-        }
-        stage('Skip if not tag') {
-            when {
-                expression {
-                    def tag = sh(script: 'git tag --points-at HEAD', returnStdout: true).trim()
-                    return tag == ''
+                script {
+                    echo "Triggered by tag: ${env.ref}"
                 }
-            }
-            steps {
-                echo "No tag detected. Skipping production deployment."
             }
         }
     }
