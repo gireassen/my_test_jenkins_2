@@ -7,6 +7,7 @@ pipeline {
                 echo "Building development branch: ${env.GIT_BRANCH}"
                 // добавьте сюда сборку, тестирование, линтинг и т.д.
 		// empty commit
+		// empty commit 2
             }
         }
 
