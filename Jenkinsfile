@@ -1,8 +1,7 @@
 pipeline {
     agent any
-
     stages {
-        stage('Check tag') {
+        stage('Deploy by tag only') {
             when {
                 expression {
                     def tag = sh(script: 'git tag --points-at HEAD', returnStdout: true).trim()
@@ -10,22 +9,13 @@ pipeline {
                 }
             }
             steps {
-                echo "Tag found. Proceeding with release pipeline."
-            }
-        }
-
-        stage('Deploy to Production') {
-            when {
-                expression {
+                script {
                     def tag = sh(script: 'git tag --points-at HEAD', returnStdout: true).trim()
-                    return tag != ''
+                    echo "Deploying production tag: ${tag}"
+                    // деплой на прод
+                    sh "echo 'Deploying tag ${tag}'"
                 }
-            }
-            steps {
-                echo "Deploying production version from tag"
-                // сюда деплой
             }
         }
     }
 }
-
